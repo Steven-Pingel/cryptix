@@ -18,7 +18,7 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
     const [cryptoKey, setCryptoKey] = useState<Map<string, string>>(initialKey);
 
     const handleKeyUp = (e: KeyboardEvent) => {
-        if (e.key.match(alphaRegex)) {
+        if (e.key.length == 1 && e.key.match(alphaRegex)) {
             const emptyFields: HTMLInputElement | null = document.querySelector(`input[value=""]`);
             if (emptyFields) {
                 emptyFields.focus();
