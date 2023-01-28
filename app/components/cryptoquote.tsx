@@ -1,18 +1,18 @@
 import { useState } from "react";
+import { alphaRegex, splitToAlphas } from "~/common/utlities";
 import LetterInput from "./letterInput";
 import StaticCharacter from "./staticCharacter";
 import WhiteSpace from "./whiteSpace";
 
 interface CryptoquoteProps {
-    cryptoquote: string;
+    cryptoquote: string,
+    author: string
 }
 
-const Cryptoquote = ({ cryptoquote }: CryptoquoteProps) => {
-    const alphaRegex = /^[A-Za-z]+$/;
+const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
     const initialKey = new Map();
-    cryptoquote.split('')
-        .filter(char => char.match(alphaRegex))
-        .map(entry => initialKey.has(entry.toUpperCase()) || initialKey.set(entry.toUpperCase(), null));
+    splitToAlphas(cryptoquote)
+        .map(entry => initialKey.has(entry) || initialKey.set(entry, ''));
 
     const [cryptoKey, setCryptoKey] = useState<Map<string, string>>(initialKey);
 
@@ -37,6 +37,7 @@ const Cryptoquote = ({ cryptoquote }: CryptoquoteProps) => {
     return (
         <>
             {characterComponents}
+            <div>Author - {author}</div>
         </>
     )
 }
