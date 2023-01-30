@@ -69,12 +69,21 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
             }
         }
 
+        const handleClick = (e: MouseEvent) => {
+            const isInput = (e.target as HTMLElement).tagName === 'INPUT';
+            if (isInput) return;
+            e.stopPropagation();
+            e.preventDefault();
+        }
+
         document.addEventListener('keyup', handleKeyUp);
         document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('mousedown', handleClick);
 
         return () => {
             document.removeEventListener('keyup', handleKeyUp);
             document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('mousedown', handleClick);
         }
     }, [alphas.length, inputRefsArray])
 
