@@ -69,7 +69,7 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
           return nextIndex;
         });
       }
-      
+
     };
 
     const handleClick = (e: MouseEvent) => {
@@ -134,7 +134,7 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
   return (
     <div>
       {wordComponents}
-      <div>Author - {author}</div>
+      <div className="text-2xl">- {author}</div>
     </div>
   );
 };
