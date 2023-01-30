@@ -21,7 +21,8 @@ export const loader = async () => {
 
   return {
     cryptoQuote: cryptoQuote,
-    author: quote.author
+    author: quote.author,
+    tags: quote.tags
   }
 };
 
@@ -32,6 +33,7 @@ export default function Index() {
     <div className="container">
       <h1>Cryptle</h1>
       <Cryptoquote cryptoquote={data.cryptoQuote} author={data.author}/>
+      Tags - {data.tags.join(", ")}
     </div>
   );
 }
