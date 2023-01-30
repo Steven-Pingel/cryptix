@@ -35,7 +35,7 @@ export default function Index() {
       <div className="text-center text-4xl py-4 border-b-4 border-black bg-slate-400">
         Cryptle
       </div>
-      <div className="px-16 pt-10">
+      <div className="lg:px-16 lg:pt-10">
         <Cryptoquote cryptoquote={data.cryptoQuote} author={data.author}/>
       </div>
     </div>
