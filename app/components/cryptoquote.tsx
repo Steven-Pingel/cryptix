@@ -69,6 +69,7 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
           return nextIndex;
         });
       }
+      
     };
 
     const handleClick = (e: MouseEvent) => {
@@ -131,10 +132,10 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
     .map((word) => createWordComponent(word));
 
   return (
-    <>
+    <div>
       {wordComponents}
       <div>Author - {author}</div>
-    </>
+    </div>
   );
 };
 
