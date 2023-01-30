@@ -30,40 +30,42 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
             if (e.key.length == 1 && e.key.match(alphaRegex)) {
                 setActiveIndex((prevIndex) => {
                     const index = prevIndex ?? 0;
-                    let nextIndex = index < alphas.length -1 ? index + 1 : 0;
-                    while(nextIndex < alphas.length - 1){
+                    let nextIndex = index < alphas.length - 1 ? index + 1 : 0;
+                    while (nextIndex < alphas.length - 1) {
                         const nextInput = inputRefsArray?.[nextIndex]?.current;
-                        if(!nextInput?.value.match(alphaRegex)){
+                        if (!nextInput?.value.match(alphaRegex)) {
                             nextInput?.focus();
                             nextInput?.select();
                             break;
                         }
                         nextIndex++
                     }
-                    
+
                     return nextIndex;
                 });
             }
+        }
+
         const handleKeyDown = (e: KeyboardEvent) => {
-            if(e.code === 'ArrowLeft'){
+            if (e.code === 'ArrowLeft') {
                 setActiveIndex((prevIndex) => {
                     const index = prevIndex ?? 0;
                     let nextIndex = index - 1 < 0 ? alphas.length - 1 : index - 1;
                     const nextInput = inputRefsArray?.[nextIndex]?.current;
                     nextInput?.focus();
                     nextInput?.select();
-                    
+
                     return nextIndex;
                 });
             }
-            if(e.code === 'ArrowRight'){
+            if (e.code === 'ArrowRight') {
                 setActiveIndex((prevIndex) => {
                     const index = prevIndex ?? 0;
                     let nextIndex = index < alphas.length - 1 ? index + 1 : 0;
                     const nextInput = inputRefsArray?.[nextIndex]?.current;
                     nextInput?.focus();
                     nextInput?.select();
-                    
+
                     return nextIndex;
                 });
             }
