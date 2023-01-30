@@ -33,7 +33,7 @@ export default function Index() {
   return (
     <div className="container bg-slate-300 min-h-screen min-w-full">
       <div className="text-center text-4xl py-4 border-b-4 border-black bg-slate-400">
-        Cryptle
+        Cryptix
       </div>
       <div className="lg:px-16 lg:pt-10">
         <Cryptoquote cryptoquote={data.cryptoQuote} author={data.author}/>
