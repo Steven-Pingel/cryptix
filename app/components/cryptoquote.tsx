@@ -98,7 +98,15 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
         const words = word.split('').map((char, index) => {
             if (char.match(alphaRegex)) {
                 const index = refIndex++;
-                const result = <LetterInput active={index === currentIndex} onFocus={() => setActiveIndex(index)} ref={inputRefsArray[index]} key={`${word}-${char}-${index}`} cryptoLetter={char} onChange={onCharacterChange} cryptoKey={cryptoKey} />;
+                const result = <LetterInput
+                    active={index === currentIndex}
+                    onFocus={() => setActiveIndex(index)}
+                    ref={inputRefsArray[index]}
+                    key={`${word}-${char}-${index}`}
+                    cryptoLetter={char}
+                    onChange={onCharacterChange}
+                    cryptoKey={cryptoKey}
+                />;
                 return result;
             }
 
