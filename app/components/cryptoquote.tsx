@@ -44,12 +44,37 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
                     return nextIndex;
                 });
             }
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if(e.code === 'ArrowLeft'){
+                setActiveIndex((prevIndex) => {
+                    const index = prevIndex ?? 0;
+                    let nextIndex = index - 1 < 0 ? alphas.length - 1 : index - 1;
+                    const nextInput = inputRefsArray?.[nextIndex]?.current;
+                    nextInput?.focus();
+                    nextInput?.select();
+                    
+                    return nextIndex;
+                });
+            }
+            if(e.code === 'ArrowRight'){
+                setActiveIndex((prevIndex) => {
+                    const index = prevIndex ?? 0;
+                    let nextIndex = index < alphas.length - 1 ? index + 1 : 0;
+                    const nextInput = inputRefsArray?.[nextIndex]?.current;
+                    nextInput?.focus();
+                    nextInput?.select();
+                    
+                    return nextIndex;
+                });
+            }
         }
 
         document.addEventListener('keyup', handleKeyUp);
+        document.addEventListener('keydown', handleKeyDown);
 
         return () => {
             document.removeEventListener('keyup', handleKeyUp);
+            document.removeEventListener('keydown', handleKeyDown);
         }
     }, [alphas.length, inputRefsArray])
 
