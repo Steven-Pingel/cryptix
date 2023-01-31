@@ -14,7 +14,7 @@ interface QuoteApiPayload {
 
 export const loader = async () => {
   const quoteResponse = await fetch(
-    "https://api.quotable.io/random?minLength=20&maxLength=250"
+    "https://api.quotable.io/random?minLength=20&maxLength=100"
   );
   const quote: QuoteApiPayload = await quoteResponse.json();
   const cryptoQuote = generateCryptoQuote(quote.content);
