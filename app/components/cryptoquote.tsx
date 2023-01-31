@@ -17,6 +17,7 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
 
   const [cryptoKey, setCryptoKey] = useState<Map<string, string>>(initialKey);
   const [currentIndex, setActiveIndex] = useState<number>(0);
+  const [selectedLetter, setSelectedLetter] = useState<string>();
   const [inputRefsArray] = useState<React.RefObject<HTMLInputElement>[]>(() =>
     Array.from({ length: alphas.length }, () => createRef())
   );
@@ -69,7 +70,6 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
           return nextIndex;
         });
       }
-
     };
 
     const handleClick = (e: MouseEvent) => {
@@ -101,8 +101,11 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
         const index = refIndex++;
         const result = (
           <LetterInput
-            active={index === currentIndex}
-            onFocus={() => setActiveIndex(index)}
+            active={selectedLetter === char}
+            onFocus={() => {
+              setActiveIndex(index);
+              setSelectedLetter(char)
+            }}
             ref={inputRefsArray[index]}
             key={`${word}-${char}-${index}`}
             cryptoLetter={char}
