@@ -55,7 +55,7 @@ const LetterInput = forwardRef(
           value={value}
           className={`w-9 h-1/2 ${
             active && "bg-yellow-300"
-          } text-center inline-block outline-none caret-transparent`}
+          } focus:animate-pulse text-center inline-block outline-none caret-transparent`}
           autoComplete="off"
         />
         <div className="h-1/2 pt-2 bg-black text-white">
