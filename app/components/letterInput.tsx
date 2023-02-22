@@ -17,6 +17,8 @@ const LetterInput = forwardRef(
     const currentValue = cryptoKey.get(normalizedCryptoLetter) ?? "";
     const [value, setValue] = useState(currentValue);
 
+    const isDuplicate = Array.from(cryptoKey.values()).filter(val => val !== '' && val === currentValue).length > 1
+
     useEffect(() => {
       setValue(currentValue);
     }, [cryptoKey, currentValue]);
@@ -53,9 +55,11 @@ const LetterInput = forwardRef(
           onBlur={handleBlur}
           onChange={handleChange}
           value={value}
-          className={`w-9 h-1/2 ${
-            active && "bg-yellow-300"
-          } focus:animate-pulse text-center inline-block outline-none caret-transparent`}
+          className={`w-9 h-1/2 
+          ${ active && "bg-yellow-300"} 
+          ${ isDuplicate && "bg-red-600"}
+          focus:bg-green-300 focus:animate-pulse text-center inline-block outline-none caret-transparent`}
+
           autoComplete="off"
         />
         <div className="h-1/2 pt-2 bg-black text-white">

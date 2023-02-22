@@ -22,17 +22,39 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
     Array.from({ length: alphas.length }, () => createRef())
   );
 
+  const resetKey = () => setCryptoKey(initialKey);
+
   useEffect(() => {
     if (inputRefsArray?.[0]?.current) {
       inputRefsArray?.[0]?.current?.focus();
     }
+
+    const moveBackward = () => setActiveIndex((prevIndex) => {
+      const index = prevIndex ?? 0;
+      let nextIndex = index - 1 < 0 ? alphas.length - 1 : index - 1;
+      const nextInput = inputRefsArray?.[nextIndex]?.current;
+      nextInput?.focus();
+      nextInput?.select();
+
+      return nextIndex;
+    });
+
+    const moveForward = () =>  setActiveIndex((prevIndex) => {
+      const index = prevIndex ?? 0;
+      let nextIndex = index < alphas.length - 1 ? index + 1 : 0;
+      const nextInput = inputRefsArray?.[nextIndex]?.current;
+      nextInput?.focus();
+      nextInput?.select();
+
+      return nextIndex;
+    });
 
     const handleKeyUp = (e: KeyboardEvent) => {
       if (e.key.length == 1 && e.key.match(alphaRegex)) {
         setActiveIndex((prevIndex) => {
           const index = prevIndex ?? 0;
           let nextIndex = index < alphas.length - 1 ? index + 1 : 0;
-          while (nextIndex < alphas.length - 1) {
+          while (nextIndex < alphas.length) {
             const nextInput = inputRefsArray?.[nextIndex]?.current;
             if (!nextInput?.value.match(alphaRegex)) {
               nextInput?.focus();
@@ -49,26 +71,10 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.code === "ArrowLeft") {
-        setActiveIndex((prevIndex) => {
-          const index = prevIndex ?? 0;
-          let nextIndex = index - 1 < 0 ? alphas.length - 1 : index - 1;
-          const nextInput = inputRefsArray?.[nextIndex]?.current;
-          nextInput?.focus();
-          nextInput?.select();
-
-          return nextIndex;
-        });
+        moveBackward()
       }
       if (e.code === "ArrowRight") {
-        setActiveIndex((prevIndex) => {
-          const index = prevIndex ?? 0;
-          let nextIndex = index < alphas.length - 1 ? index + 1 : 0;
-          const nextInput = inputRefsArray?.[nextIndex]?.current;
-          nextInput?.focus();
-          nextInput?.select();
-
-          return nextIndex;
-        });
+        moveForward()
       }
     };
 
@@ -137,7 +143,10 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
   return (
     <div>
       {wordComponents}
-      <div className="text-2xl">- {author}</div>
+      <div>
+        <div className="text-2xl">- {author}</div>
+        <button onClick={resetKey}>Clear</button>
+      </div>
     </div>
   );
 };
