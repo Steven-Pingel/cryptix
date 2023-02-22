@@ -1,8 +1,10 @@
+import { useSubmit } from "@remix-run/react";
 import React, { useEffect, createRef, useState } from "react";
 import { alphaRegex, splitToAlphas } from "~/common/utlities";
 import LetterInput from "./letterInput";
 import StaticCharacter from "./staticCharacter";
 import WhiteSpace from "./whiteSpace";
+import { Form } from "@remix-run/react";
 
 interface CryptoquoteProps {
   cryptoquote: string;
@@ -10,6 +12,7 @@ interface CryptoquoteProps {
 }
 
 const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
+  const submit = useSubmit();
   const alphas = splitToAlphas(cryptoquote);
 
   const initialKey = new Map();
@@ -21,8 +24,9 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
   const [inputRefsArray] = useState<React.RefObject<HTMLInputElement>[]>(() =>
     Array.from({ length: alphas.length }, () => createRef())
   );
+  const [setGameOver, gameOver] = useState<boolean>(false);
 
-  const resetKey = () => setCryptoKey(initialKey);
+  useEffect
 
   useEffect(() => {
     if (inputRefsArray?.[0]?.current) {
@@ -96,6 +100,8 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
     };
   }, [alphas.length, inputRefsArray]);
 
+  
+  const resetKey = () => setCryptoKey(initialKey);
   const onCharacterChange = (cryptoLetter: string, letter: string) => {
     setCryptoKey((key) => new Map(key.set(cryptoLetter, letter)));
   };
@@ -140,10 +146,22 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
     .split(" ")
     .map((word) => createWordComponent(word));
 
+  const handleChange = (event: React.FormEvent<HTMLFormElement>) => {
+    const valCount = Array.from(cryptoKey.values()).filter(x => x !== '').length
+    const keyCount = Array.from(cryptoKey.keys()).length
+    if(valCount === keyCount){
+      submit(event.currentTarget, {replace: true})
+    }
+  }
+
   return (
     <div>
-      {wordComponents}
+      <Form method="post" action='/checkSolution' onChange={handleChange}>
+        {wordComponents}
+        <input hidden value={JSON.stringify(cryptoKey)}/>
+      </Form>
       <div>
+        <div></div>
         <div className="text-2xl">- {author}</div>
         <button onClick={resetKey}>Clear</button>
       </div>
