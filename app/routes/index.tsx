@@ -1,3 +1,4 @@
+import type { ActionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { generateCryptoQuote } from "~/common/utlities";
 import Cryptoquote from "~/components/cryptoquote";
@@ -26,6 +27,15 @@ export const loader = async () => {
     tags: quote.tags,
   };
 };
+
+export const action = async ({request}: ActionArgs) => {
+  const userAnswerKey = await (await request.formData()).get('answerKey');
+  if(!userAnswerKey) return { answerKeyEntry: false};
+
+  return {
+    answerIsCorrect: true
+  }
+}
 
 export default function Index() {
   const data = useLoaderData<typeof loader>();

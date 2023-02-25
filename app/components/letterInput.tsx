@@ -1,8 +1,9 @@
 import React, { forwardRef, useEffect, useState } from "react";
+import type { AnswerKey } from "./cryptoquote";
 
 interface LetterInputProps {
   cryptoLetter: string;
-  cryptoKey: Map<string, string>;
+  cryptoKey: AnswerKey;
   onChange: (cryptoLetter: string, letter: string) => void;
   onFocus: () => void;
   active: boolean;
@@ -14,10 +15,10 @@ const LetterInput = forwardRef(
     ref: React.ForwardedRef<HTMLInputElement>
   ) => {
     const normalizedCryptoLetter = cryptoLetter.toUpperCase();
-    const currentValue = cryptoKey.get(normalizedCryptoLetter) ?? "";
+    const currentValue = cryptoKey[normalizedCryptoLetter] ?? "";
     const [value, setValue] = useState(currentValue);
 
-    const isDuplicate = Array.from(cryptoKey.values()).filter(val => val !== '' && val === currentValue).length > 1
+    const isDuplicate = Array.from(Object.values(cryptoKey)).filter(val => val !== '' && val === currentValue).length > 1
 
     useEffect(() => {
       setValue(currentValue);
