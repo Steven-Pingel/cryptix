@@ -125,7 +125,7 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
 
   let refIndex = 0;
   const createWordComponent = (word: string) => {
-    const words = word.split("").map((char, index) => {
+    const letters = word.split("").map((char, index) => {
       if (char.match(alphaRegex)) {
         const index = refIndex++;
         const result = (
@@ -152,7 +152,7 @@ const Cryptoquote = ({ cryptoquote, author }: CryptoquoteProps) => {
 
     return (
       <span key={`${refIndex}-${word}`}>
-        <div className="inline-block">{words}</div>
+        <div className="inline-block">{letters}</div>
         <WhiteSpace key={`ws-${word}`} />
       </span>
     );
